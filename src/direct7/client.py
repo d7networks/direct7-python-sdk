@@ -5,6 +5,8 @@ from requests import Response
 from requests.adapters import HTTPAdapter
 from requests.sessions import Session
 from .sms import SMS
+from .verify import VERIFY
+from .viber import VIBER
 
 import direct7
 
@@ -31,6 +33,8 @@ class Client:
         self._api_token = api_token
         self._host = "https://api.d7networks.com"
         self._sms_api_host = "https://api.d7networks.com/messages"
+        self._verify_api_host = "https://api.d7networks.com/verify"
+        self._viber_api_host = "https://api.d7networks.com/viber"
 
         user_agent = f"direct7-python-sdk/{direct7.__version__} python/{python_version()}"
 
@@ -40,6 +44,8 @@ class Client:
         }
 
         self.sms = SMS(self)
+        self.verify = VERIFY(self)
+        self.viber = VIBER(self)
 
         self.timeout = timeout
         self.session = Session()
