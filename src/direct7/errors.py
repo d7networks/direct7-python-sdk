@@ -20,3 +20,6 @@ class NotFoundError(Exception):
 
 class ServerError(Exception):
     pass
+
+class BadRequest(Exception):
+    pass
