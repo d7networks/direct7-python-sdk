@@ -120,16 +120,13 @@ class Client:
                                      )
                                      )
 
-    def post(self, host, path, body_is_json=True, params={}, unicode_support=False):
+    def post(self, host, path, body_is_json=True, params={}):
         """
         Send HTTP POST request to the D7 API.
         """
         request_url = f"{host}{path}"
         self._request_headers = self.headers
         self._request_headers['Authorization'] = self._create_bearer_token_string()
-        # Ensure Unicode support by encoding message content as utf-8
-        if unicode_support:
-            params = {key: value.encode('utf-8') if isinstance(value, str) else value for key, value in params.items()}
         if body_is_json:
             self._request_headers['Content-Type'] = 'application/json'
             log.debug(f"POST request sent to {request_url} with headers {self._request_headers} and params {params}")

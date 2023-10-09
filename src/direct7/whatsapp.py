@@ -8,7 +8,7 @@ class WHATSAPP:
     def __init__(self, client):
         self._client = client
 
-    def send_whatsapp_message(self, params: dict):
+    def send_whatsapp_contact_message(self, params: dict):
         """
         Send a whatsapp message to a single/multiple recipient.
         :param params: dict - The message request parameters.
@@ -22,6 +22,75 @@ class WHATSAPP:
         log.info("Message sent successfully.")
         return response
 
+    def send_whatsapp_location_message(self, params: dict):
+        """
+        Send a whatsapp message to a single/multiple recipient.
+        :param params: dict - The message request parameters.
+        :return:
+        """
+        response = self._client.post(
+            self._client.host(),
+            "/whatsapp/v1/send",
+            params=params
+        )
+        log.info("Message sent successfully.")
+        return response
+
+    def send_whatsapp_attachment_message(self, params: dict):
+        """
+        Send a whatsapp message to a single/multiple recipient.
+        :param params: dict - The message request parameters.
+        :return:
+        """
+        response = self._client.post(
+            self._client.host(),
+            "/whatsapp/v1/send",
+            params=params
+        )
+        log.info("Message sent successfully.")
+        return response
+
+    def send_whatsapp_text_message(self, params: dict):
+        """
+        Send a whatsapp message to a single/multiple recipient.
+        :param params: dict - The message request parameters.
+        :return:
+        """
+        response = self._client.post(
+            self._client.host(),
+            "/whatsapp/v1/send",
+            params=params
+        )
+        log.info("Message sent successfully.")
+        return response
+
+    def send_whatsapp_templated_message(self, params: dict):
+        """
+        Send a whatsapp message to a single/multiple recipient.
+        :param params: dict - The message request parameters.
+        :return:
+        """
+        response = self._client.post(
+            self._client.host(),
+            "/whatsapp/v1/send",
+            params=params
+        )
+        log.info("Message sent successfully.")
+        return response
+
+    def send_whatsapp_interactive_message(self, params: dict):
+        """
+        Send a whatsapp message to a single/multiple recipient.
+        :param params: dict - The message request parameters.
+        :return:
+        """
+        response = self._client.post(
+            self._client.host(),
+            "/whatsapp/v1/send",
+            params=params
+        )
+        log.info("Message sent successfully.")
+        return response
 
     def get_status(self, request_id: str):
         """
