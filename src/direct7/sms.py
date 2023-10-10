@@ -12,7 +12,11 @@ class SMS:
                      unicode: bool = False):
         """
         Send a message to a single/multiple recipient.
-        :param params: dict - The message request parameters.
+        :param recipients: list - Mobile Numbers to send SMS seperated by comma in an array.
+        :param content: str - The message content is being sent.
+        :param originator: str - The Sender/Header of a message.
+        :param report_url: str - receive delivery status.
+        :param unicode: boolean - To know the msg contain unicode data or not.
         :return:
         """
 

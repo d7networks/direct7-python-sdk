@@ -140,7 +140,7 @@ from direct7 import Client
 
 client = Client(api_token="Your API token")
 
-client.whatsapp.send_whatsapp_freeform_message(originator="91906152XXXX", recipients="str", message_type="CONTACTS", first_name="Amal", last_name="Anu", display_name="Amal Anu", phone="91906152XXXX", email = "amal@gmail.com")
+client.whatsapp.send_whatsapp_freeform_message(originator="91906152XXXX", recipient="91906152XXXX", message_type="CONTACTS", first_name="Amal", last_name="Anu", display_name="Amal Anu", phone="91906152XXXX", email = "amal@gmail.com")
 ```
 
 ### Send Whatsapp Templated Message.

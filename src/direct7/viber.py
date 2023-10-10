@@ -11,7 +11,11 @@ class VIBER:
     def send_viber_message(self, recipients: list, content: str, label: str, originator: str, call_back_url: str = None):
         """
         Send a viber message to a single/multiple recipient.
-        :param params: dict - The message request parameters.
+        :param recipients: list - Mobile Numbers to send Viber seperated by comma in an array.
+        :param content: str - The message content is being sent.
+        :param originator: str - The Sender/Header of a message.
+        :param call_back_url: str - receive delivery status.
+        :param label: str - Describes the nature of message being sent to end user
         :return:
         """
         message = {

@@ -10,8 +10,11 @@ class SLACK:
 
     def send_slack_message(self, content: str, work_space_name: str, channel_name: str, report_url: str = None):
         """
-        Send a slack message to a single/multiple recipient.
-        :param params: dict - The message request parameters.
+        Send a slack message to a single workspace.
+        :param content: str -  Message content is being sent.
+        :param work_space_name: str - Name of Workspace to send message.
+        :param channel_name: str - Name of Channel to send message.
+        :param report_url: str - receive delivery status.
         :return:
         """
         message = {
