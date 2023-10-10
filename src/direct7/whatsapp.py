@@ -34,7 +34,6 @@ class WHATSAPP:
         :param attachment_caption: str - Attachment caption for "ATTACHMENT" message type.
         :param message_text: str - Message text for "TEXT" message type.
         """
-
         message = {
             "originator": originator,
             "recipients": [{"recipient": recipient}],

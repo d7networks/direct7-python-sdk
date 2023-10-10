@@ -8,17 +8,25 @@ class VIBER:
     def __init__(self, client):
         self._client = client
 
-    def send_viber_message(self, params: dict):
+    def send_viber_message(self, recipients: list, content: str, label: str, originator: str, call_back_url: str = None):
         """
         Send a viber message to a single/multiple recipient.
         :param params: dict - The message request parameters.
         :return:
         """
-        response = self._client.post(
-            self._client.host(),
-            "/viber/v1/send",
-            params=params
-        )
+        message = {
+            "channel": "viber",
+            "recipients": recipients,
+            "content": content,
+            "label": label
+        }
+        message_globals = {
+            "originator": originator,
+            "call_back_url": call_back_url
+        }
+
+        response = self._client.post(self._client.host(), "/viber/v1/send",
+                                     params={"messages": [message], "message_globals": message_globals})
         log.info("Message sent successfully.")
         return response
 

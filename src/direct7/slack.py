@@ -8,17 +8,23 @@ class SLACK:
     def __init__(self, client):
         self._client = client
 
-    def send_slack_message(self, params: dict):
+    def send_slack_message(self, content: str, work_space_name: str, channel_name: str, report_url: str = None):
         """
         Send a slack message to a single/multiple recipient.
         :param params: dict - The message request parameters.
         :return:
         """
-        response = self._client.post(
-            self._client.host(),
-            "/messages/v1/send",
-            params=params
-        )
+        message = {
+            "channel": "slack",
+            "content": content,
+            "work_space_name": work_space_name,
+            "channel_name": channel_name
+        }
+        message_globals = {
+            "report_url": report_url
+        }
+        response = self._client.post(self._client.host(), "/messages/v1/send",
+                                     params={"messages": [message], "message_globals": message_globals})
 
         log.info("Message sent successfully.")
         return response
