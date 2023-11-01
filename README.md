@@ -26,6 +26,15 @@ client = Client(api_token="Your API token")
 client.sms.send_message(recipients = ["+97150900XXXX","+97845900XXX"], content = "Greetings from D7 API", originator = "SignOTP", report_url = "https://the_url_to_recieve_delivery_report.com", unicode = False)
 ```
 
+### Send SMS (Unicode)
+
+```python
+from direct7 import Client
+
+client = Client(api_token="Your API token")
+
+client.sms.send_message(recipients = ["+97150900XXXX","+97845900XXX"], content = "مرحبا بالعالم!", originator = "SignOTP", report_url = "https://the_url_to_recieve_delivery_report.com", unicode = True)
+```
 
 ### Get Request Status
 
