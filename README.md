@@ -1,7 +1,10 @@
 # Direct7 Python SDK
 
-This Python SDK provides a convenient and easy-to-use interface to the Direct7 REST API. The SDK allows you to perform
-all the operations that are available through the REST API.
+Python SDK to seamlessly incorporate communication features into your Python applications via the Direct7 REST API. This SDK empowers you to effortlessly initiate SMS,Whatsapp, Slack, Viber  messages and 2 factor authentication features.
+
+## Documentation
+The documentation for the Direct7 REST API can be found here [Direct7 API Reference](https://d7networks.com/docs/).
+
 
 ## Installation
 
@@ -11,9 +14,26 @@ The SDK is available on PyPI and can be installed using `pip`:
 pip install direct7
 ```
 
+
 ## Usage
 
-The SDK is designed to be easy to use. The library needs to be configured with your account's secret key, which is available in your [Direct7 Dashboard](https://app.d7networks.com/api-tokens). To get started, create a client instance by providing the key. If you haven't already, you can Login [here](https://app.d7networks.com/signin) to access your dashboard.
+To get started you need to have an active Direct7 account, If you haven't yet registered, please proceed to [Sign up](https://app.d7networks.com/signup?tag="direct7-python-sdk")
+
+### Authentication
+
+In order to initiate API requests, create a client object using your Direct7 API token. To obtain an API token, kindly visit the following link: https://app.d7networks.com/api-tokens.
+
+## Examples
+
+  - [SMS](#sms)
+  - [Verify](#verify)
+  - [Whatsapp](#whatsapp)
+  - [Number Lookup](#number-lookup)
+  - [Viber](#viber)
+  - [Slack](#slack)
+
+### SMS
+
 
 ### Send SMS
 
@@ -25,7 +45,7 @@ client = Client(api_token="Your API token")
 client.sms.send_message(recipients = ["+97150900XXXX","+97845900XXX"], content = "Greetings from D7 API", originator = "SignOTP", report_url = "https://the_url_to_recieve_delivery_report.com", unicode = False)
 ```
 
-### Send SMS (Unicode)
+### Send an Unicode SMS
 
 ```python
 from direct7 import Client
@@ -35,7 +55,7 @@ client = Client(api_token="Your API token")
 client.sms.send_message(recipients = ["+97150900XXXX","+97845900XXX"], content = "مرحبا بالعالم!", originator = "SignOTP", report_url = "https://the_url_to_recieve_delivery_report.com", unicode = True)
 ```
 
-### Get Request Status
+### Check SMS Request Status
 
 ```python
 from direct7 import Client
@@ -45,6 +65,8 @@ client = Client(api_token="Your API token")
 # request_id is the id returned in the response of send_message
 client.sms.get_status(request_id="0012c7f5-2ba5-49db-8901-4ee9be6dc8d1")
 ```
+
+### Verify
 
 ### Send OTP
 
@@ -76,7 +98,7 @@ client = Client(api_token="Your API token")
 client.verify.verify_otp(otp_id="0012c7f5-2ba5-49db-8901-4ee9be6dc8d1", otp_code="1425")
 ```
 
-### Get Request Status
+### Check Verify Request Status
 
 ```python
 from direct7 import Client
@@ -87,59 +109,8 @@ client = Client(api_token="Your API token")
 client.verify.get_status(otp_id="0012c7f5-2ba5-49db-8901-4ee9be6dc8d1")
 ```
 
-### Send Viber Message
 
-```python
-from direct7 import Client
-
-client = Client(api_token="Your API token")
-
-client.viber.send_viber_message(recipients=["+97150900XXXX","+97845900XXX"], content="Greetings from D7 API", label="PROMOTION", originator="INFO2WAY", call_back_url="https://the_url_to_recieve_delivery_report.com")
-```
-
-
-### Get Request Status
-
-```python
-from direct7 import Client
-
-client = Client(api_token="Your API token")
-
-# request_id is the id returned in the response of send_viber_message
-client.viber.get_status(request_id="0012c7f5-2ba5-49db-8901-4ee9be6dc8d1")
-```
-
-### Send Slack Message
-
-```python
-from direct7 import Client
-
-client = Client(api_token="Your API token")
-
-client.slack.send_slack_message(content="Greetings from D7 API", work_space_name="WorkspaceName", channel_name="ChannelName", report_url="https://the_url_to_recieve_delivery_report.com")
-```
-
-
-### Get Request Status
-
-```python
-from direct7 import Client
-
-client = Client(api_token="Your API token")
-
-# request_id is the id returned in the response of send_slack_message
-client.slack.get_status(request_id="0012c7f5-2ba5-49db-8901-4ee9be6dc8d1")
-```
-
-### Search Your Number details
-
-```python
-from direct7 import Client
-
-client = Client(api_token="Your API token")
-
-client.number_lookup.search_number_details(recipient="+914257845XXXX")
-```
+### Whatsapp
 
 ### Send Whatsapp Free-form Message (Contact Details)
 
@@ -161,7 +132,7 @@ client = Client(api_token="Your API token")
 client.whatsapp.send_whatsapp_templated_message(originator="91906152XXXX", recipient="91906152XXXX", message_type="TEMPLATE", template_id="monthly_promotion", body_parameter_values={"0": "promotion"})
 ```
 
-### Get Request Status
+### Check Whatsapp Request Status
 
 ```python
 from direct7 import Client
@@ -171,6 +142,67 @@ client = Client(api_token="Your API token")
 # request_id is the id returned in the response of send_message
 client.whatsapp.get_status(request_id="0012c7f5-2ba5-49db-8901-4ee9be6dc8d1")
 ```
+
+### Number Lookup
+
+### Search Phone Number Details
+
+```python
+from direct7 import Client
+
+client = Client(api_token="Your API token")
+
+client.number_lookup.search_number_details(recipient="+914257845XXXX")
+```
+
+### Viber
+
+### Send Viber Message
+
+```python
+from direct7 import Client
+
+client = Client(api_token="Your API token")
+
+client.viber.send_viber_message(recipients=["+97150900XXXX","+97845900XXX"], content="Greetings from D7 API", label="PROMOTION", originator="INFO2WAY", call_back_url="https://the_url_to_recieve_delivery_report.com")
+```
+
+
+### Check Viber Request Status
+
+```python
+from direct7 import Client
+
+client = Client(api_token="Your API token")
+
+# request_id is the id returned in the response of send_viber_message
+client.viber.get_status(request_id="0012c7f5-2ba5-49db-8901-4ee9be6dc8d1")
+```
+
+### Slack
+
+### Send Slack Message
+
+```python
+from direct7 import Client
+
+client = Client(api_token="Your API token")
+
+client.slack.send_slack_message(content="Greetings from D7 API", work_space_name="WorkspaceName", channel_name="ChannelName", report_url="https://the_url_to_recieve_delivery_report.com")
+```
+
+
+### Check Slack Request Status
+
+```python
+from direct7 import Client
+
+client = Client(api_token="Your API token")
+
+# request_id is the id returned in the response of send_slack_message
+client.slack.get_status(request_id="0012c7f5-2ba5-49db-8901-4ee9be6dc8d1")
+```
+
 
 ## FAQ
 
