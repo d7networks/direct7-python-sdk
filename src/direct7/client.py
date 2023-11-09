@@ -4,11 +4,17 @@ from platform import python_version
 from requests import Response
 from requests.adapters import HTTPAdapter
 from requests.sessions import Session
+
+from .number_lookup import NUMBER_LOOKUP
+from .slack import SLACK
 from .sms import SMS
+from .verify import VERIFY
+from .viber import VIBER
 
 import direct7
 
 from .errors import *
+from .whatsapp import WHATSAPP
 
 log = logging.getLogger(__name__)
 
@@ -30,7 +36,6 @@ class Client:
     ) -> None:
         self._api_token = api_token
         self._host = "https://api.d7networks.com"
-        self._sms_api_host = "https://api.d7networks.com/messages"
 
         user_agent = f"direct7-python-sdk/{direct7.__version__} python/{python_version()}"
 
@@ -40,6 +45,11 @@ class Client:
         }
 
         self.sms = SMS(self)
+        self.verify = VERIFY(self)
+        self.viber = VIBER(self)
+        self.slack = SLACK(self)
+        self.number_lookup = NUMBER_LOOKUP(self)
+        self.whatsapp = WHATSAPP(self)
 
         self.timeout = timeout
         self.session = Session()
@@ -71,11 +81,15 @@ class Client:
         elif 200 <= response.status_code < 300:
             # success response
             try:
-                return response.json()
+                result = response.json()
+                log.debug(f"Successful process response: {result}")
+                return result
             except JSONDecodeError:
                 pass
         elif 400 <= response.status_code < 500:
             log.warning(f"Client error: {response.status_code} {repr(response.content)}")
+            if response.status_code == 400:
+                raise BadRequest(f"{repr(response.content)}")
             if response.status_code == 404:
                 raise NotFoundError(f"{repr(response.content)}")
             if response.status_code == 402:
@@ -96,6 +110,7 @@ class Client:
         request_url = f"{host}{path}"
         self._request_headers = self.headers
         self._request_headers['Authorization'] = self._create_bearer_token_string()
+        log.debug(f"GET request sent to {request_url} with headers {self._request_headers} and params {params}")
         return self.process_response(host,
                                      self.session.get(
                                          request_url,
@@ -114,6 +129,7 @@ class Client:
         self._request_headers['Authorization'] = self._create_bearer_token_string()
         if body_is_json:
             self._request_headers['Content-Type'] = 'application/json'
+            log.debug(f"POST request sent to {request_url} with headers {self._request_headers} and params {params}")
             return self.process_response(host,
                                          self.session.post(
                                              request_url,
