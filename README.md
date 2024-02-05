@@ -42,7 +42,12 @@ from direct7 import Client
 
 client = Client(api_token="Your API token")
 
-client.sms.send_message(recipients = ["+97150900XXXX","+97845900XXX"], content = "Greetings from D7 API", originator = "SignOTP", report_url = "https://the_url_to_recieve_delivery_report.com", unicode = False)
+client.sms.send_messages(
+        {"recipients": ["+9199XXXXXXXX"], "content": "Greetings from D7 API", "unicode": False},
+        originator="Sender",
+        report_url="https://the_url_to_receive_delivery_report.com",
+        schedule_time='2024-02-05T09:48:42+0000',
+        )
 ```
 
 ### Send an Unicode SMS
@@ -52,7 +57,11 @@ from direct7 import Client
 
 client = Client(api_token="Your API token")
 
-client.sms.send_message(recipients = ["+97150900XXXX","+97845900XXX"], content = "مرحبا بالعالم!", originator = "SignOTP", report_url = "https://the_url_to_recieve_delivery_report.com", unicode = True)
+client.sms.send_messages(
+        {"recipients": ["+9199XXXXXXXXXX"],"content": "مرحبا بالعالم!", "unicode": True},
+        originator="Sender",
+        report_url="https://the_url_to_receive_delivery_report.com",
+        )
 ```
 
 ### Check SMS Request Status
