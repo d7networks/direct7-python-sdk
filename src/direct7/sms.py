@@ -8,31 +8,43 @@ class SMS:
     def __init__(self, client):
         self._client = client
 
-    def send_message(self, recipients: list, content: str, originator: str, report_url: str = None,
-                     unicode: bool = False):
+    def send_messages(self, *args, originator: str, report_url: str = None, unicode: bool = False,
+                      schedule_time: str = None):
         """
-        Send a message to a single/multiple recipient.
-        :param recipients: list - Mobile Numbers to send SMS seperated by comma in an array.
-        :param content: str - The message content is being sent.
+        Send one or more messages to a single/multiple recipient(s).
+        :param args: variable number of message dictionaries.
+                      Each message dictionary should contain the following fields:
+                        - recipients: list - Mobile Numbers to send SMS separated by comma in an array.
+                        - content: str - The message content being sent.
+                        - msg_type: str - Type of the message (e.g., "text").
+                        - data_coding: str - Coding type for the message (e.g., "text" or "unicode").
         :param originator: str - The Sender/Header of a message.
-        :param report_url: str - receive delivery status.
+        :param report_url: str - Receive delivery status.
         :param unicode: boolean - To know the msg contain unicode data or not.
         :return:
         """
 
-        message = {
-            "channel": "sms",
-            "recipients": recipients,
-            "content": content,
-            "msg_type": "text",
-            "data_coding": "unicode" if unicode else "text"
-        }
+        messages = [
+            {
+                "channel": "sms",
+                "recipients": message.get("recipients", []),
+                "content": message.get("content", ""),
+                "msg_type": "text",
+                "data_coding": "unicode" if unicode else "text"
+            }
+            for message in args
+        ]
         message_globals = {
             "originator": originator,
-            "report_url": report_url
+            "report_url": report_url,
+            "schedule_time": schedule_time
         }
-        response = self._client.post(self._client.host(), "/messages/v1/send", params={"messages": [message], "message_globals": message_globals})
-        log.info("Message sent successfully.")
+        payload = {
+            "messages": messages,
+            "message_globals": message_globals
+        }
+        response = self._client.post(self._client.host(), "/messages/v1/send", params=payload)
+        log.info("Messages sent successfully.")
         return response
 
     def get_status(self, request_id: str):
