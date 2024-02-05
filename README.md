@@ -46,7 +46,6 @@ client.sms.send_messages(
         {"recipients": ["+9199XXXXXXXX"], "content": "Greetings from D7 API", "unicode": False},
         originator="Sender",
         report_url="https://the_url_to_receive_delivery_report.com",
-        unicode=False,
         schedule_time='2024-02-05T09:48:42+0000',
         )
 ```
@@ -62,7 +61,6 @@ client.sms.send_messages(
         {"recipients": ["+9199XXXXXXXXXX"],"content": "مرحبا بالعالم!", "unicode": True},
         originator="Sender",
         report_url="https://the_url_to_receive_delivery_report.com",
-        unicode=False,
         )
 ```
 

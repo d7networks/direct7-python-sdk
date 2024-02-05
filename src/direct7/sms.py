@@ -8,8 +8,7 @@ class SMS:
     def __init__(self, client):
         self._client = client
 
-    def send_messages(self, *args, originator: str, report_url: str = None, unicode: bool = False,
-                      schedule_time: str = None):
+    def send_messages(self, *args, originator: str, report_url: str = None, schedule_time: str = None):
         """
         Send one or more messages to a single/multiple recipient(s).
         :param args: variable number of message dictionaries.
@@ -20,7 +19,6 @@ class SMS:
                         - data_coding: str - Coding type for the message (e.g., "text" or "unicode").
         :param originator: str - The Sender/Header of a message.
         :param report_url: str - Receive delivery status.
-        :param unicode: boolean - To know the msg contain unicode data or not.
         :return:
         """
 
@@ -30,7 +28,7 @@ class SMS:
                 "recipients": message.get("recipients", []),
                 "content": message.get("content", ""),
                 "msg_type": "text",
-                "data_coding": "unicode" if unicode else "text"
+                "data_coding": "unicode" if message.unicode else "text"
             }
             for message in args
         ]

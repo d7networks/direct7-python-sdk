@@ -9,7 +9,6 @@ def test_send_messages():
         {"recipients": ["+9199XXXXXXXXXX"],"content": "مرحبا بالعالم!", "unicode": True},
         originator="Sender",
         report_url="https://the_url_to_receive_delivery_report.com",
-        unicode=False,
         schedule_time='2024-02-05T09:48:42+0000',
         )
 
