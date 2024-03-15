@@ -9,11 +9,12 @@ class WHATSAPP:
         self._client = client
 
     def send_whatsapp_freeform_message(self, originator: str, recipient: str, message_type: str, first_name: str = None,
-                                       last_name: str = None, display_name: str = None, phone: str = None,
-                                       email: str = None, url: str = None, latitude: str = None, longitude: str = None,
-                                       location_name: str = None, location_address: str = None,
-                                       attachment_type: str = None, attachment_url: str = None,
-                                       attachment_caption: str = None, message_text: str = None):
+                                       last_name: str = None, formatted_name: str = None, birthday: str = None,
+                                       phones: list = None,
+                                       emails: list = None, urls: list = None, latitude: str = None,
+                                       longitude: str = None,
+                                       name: str = None, address: str = None,
+                                       type: str = None, url: str = None, caption: str = None, body: str = None):
         """
         Send a WhatsApp message to a single/multiple recipients.
         :param originator: str - The message originator.
@@ -21,18 +22,18 @@ class WHATSAPP:
         :param message_type: str - The type of message ("CONTACTS", "LOCATION", "ATTACHMENT", "TEXT").
         :param first_name: str - First name for "CONTACTS" message type.
         :param last_name: str - Last name for "CONTACTS" message type.
-        :param display_name: str - Display name for "CONTACTS" message type.
-        :param phone: str - Phone number for "CONTACTS" message type.
-        :param email: str - Email address for "CONTACTS" message type.
-        :param url: str - URL for "CONTACTS" message type.
+        :param formatted_name: str - Display name for "CONTACTS" message type.
+        :param phones: list - Phone number for "CONTACTS" message type.
+        :param emails: list - Email address for "CONTACTS" message type.
+        :param urls: list - URL for "CONTACTS" message type.
         :param latitude: str - Latitude for "LOCATION" message type.
         :param longitude: str - Longitude for "LOCATION" message type.
-        :param location_name: str - Location name for "LOCATION" message type.
-        :param location_address: str - Location address for "LOCATION" message type.
-        :param attachment_type: str - Attachment type for "ATTACHMENT" message type.
-        :param attachment_url: str - Attachment URL for "ATTACHMENT" message type.
-        :param attachment_caption: str - Attachment caption for "ATTACHMENT" message type.
-        :param message_text: str - Message text for "TEXT" message type.
+        :param name: str - Location name for "LOCATION" message type.
+        :param address: str - Location address for "LOCATION" message type.
+        :param type: str - Attachment type for "ATTACHMENT" message type.
+        :param url: str - Attachment URL for "ATTACHMENT" message type.
+        :param caption: str - Attachment caption for "ATTACHMENT" message type.
+        :param body: str - Message text for "TEXT" message type.
         """
         message = {
             "originator": originator,
@@ -43,38 +44,46 @@ class WHATSAPP:
         }
 
         if message_type == "CONTACTS":
-            message["content"]["contact"] = {
-                "first_name": first_name,
-                "last_name": last_name,
-                "display_name": display_name,
-                "phone": phone,
-                "email": email,
-                "url": url
-            }
+            message["content"]["contacts"] = [{
+                "name": {
+                    "first_name": first_name,
+                    "last_name": last_name,
+                    "formatted_name": formatted_name,
+                },
+                "birthday": birthday,
+                "phones": [{"phone": phone} for phone in phones] if phones else None,
+                "emails": [{"email": email} for email in emails] if emails else None,
+                "urls": [{"url": url} for url in urls if urls] if urls else None
+            }]
         elif message_type == "LOCATION":
             message["content"]["location"] = {
                 "latitude": latitude,
                 "longitude": longitude,
-                "name": location_name,
-                "address": location_address
+                "name": name,
+                "address": address
             }
         elif message_type == "ATTACHMENT":
             message["content"]["attachment"] = {
-                "attachment_type": attachment_type,
-                "attachment_url": attachment_url,
-                "attachment_caption": attachment_caption
+                "type": type,
+                "url": url,
+                "caption": caption
             }
         elif message_type == "TEXT":
-            message["content"]["message_text"] = message_text
+            message["content"]["text"] = {
+                "body": body
+            }
 
-        response = self._client.post(self._client.host(), "/whatsapp/v1/send", params={"messages": [message]})
+        response = self._client.post(
+            self._client.host(), "/whatsapp/v2/send", params={"messages": [message]})
         log.info("Message sent successfully.")
         return response
 
     def send_whatsapp_templated_message(self, originator: str, recipient: str, template_id: str,
-                                        body_parameter_values: dict, media_type: str = None, media_url: str = None,
+                                        body_parameter_values: dict = {}, media_type: str = None,
+                                        media_url: str = None,
                                         latitude: str = None, longitude: str = None, location_name: str = None,
-                                        location_address: str = None):
+                                        location_address: str = None, lto_expiration_time_ms: str = None,
+                                        coupon_code: str = None, quick_replies: dict = None, actions: dict = None, carousel_cards: list = []):
         """
         Send a WhatsApp message to a single/multiple recipients.
         :param originator: str - The message originator.
@@ -105,9 +114,39 @@ class WHATSAPP:
                     }
                 }
             else:
-                message["content"]["template"]["media"] = {"media_type": media_type, "media_url": media_url}
+                message["content"]["template"]["media"] = {
+                    "media_type": media_type, "media_url": media_url}
+        if lto_expiration_time_ms:
+            message["content"]["template"]["limited_time_offer"] = {
+                "expiration_time_ms": lto_expiration_time_ms
+            }
+        if coupon_code:
+            message["content"]["template"]["buttons"] = {
+                "coupon_code": [
+                    {
+                        "index": 0,
+                        "type": "copy_code",
+                        "coupon_code": coupon_code
+                    }
+                ]
+            }
+        if actions:
+            message["content"]["template"]["buttons"] = {
+                "actions": actions
+            }
 
-        response = self._client.post(self._client.host(), "/whatsapp/v1/send", params={"messages": [message]})
+        if quick_replies:
+            message["content"]["template"]["buttons"] = {
+                "quick_replies": quick_replies
+            }
+
+        if carousel_cards:
+            message["content"]["template"]["carousel"] = {
+                "cards": carousel_cards
+            }
+
+        response = self._client.post(
+            self._client.host(), "/whatsapp/v2/send", params={"messages": [message]})
         log.info("Message sent successfully.")
         return response
 
