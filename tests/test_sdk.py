@@ -6,7 +6,7 @@ client = Client(
 
 def test_send_messages():
     response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="9181XXXXXXXX",
-                                                                            recipients="9190XXXXXXXX",
+                                                                            recipient="9190XXXXXXXX",
                                                                             message_type="CONTACTS", first_name="Amal",
                                                                             last_name="Anu", formatted_name="Amal Anu",
                                                                             phones=["9181XXXXXXXX", "9181XXXXXXXX"],

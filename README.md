@@ -128,7 +128,12 @@ from direct7 import Client
 
 client = Client(api_token="Your API token")
 
-client.whatsapp.send_whatsapp_freeform_message(originator="91906152XXXX", recipient="91906152XXXX", message_type="CONTACTS", first_name="Amal", last_name="Anu", display_name="Amal Anu", phone="91906152XXXX", email = "amal@gmail.com")
+client.whatsapp.send_whatsapp_freeform_message( originator="9181XXXXXXXX",
+                                                recipient="9190XXXXXXXX",
+                                                message_type="CONTACTS", first_name="Amal",
+                                                last_name="Anu", formatted_name="Amal Anu",
+                                                phones=["9181XXXXXXXX", "9181XXXXXXXX"],
+                                                emails=["amal@gmail.com", "amal2@gmail1.com"])
 ```
 
 ### Send Whatsapp Templated Message.
@@ -138,7 +143,7 @@ from direct7 import Client
 
 client = Client(api_token="Your API token")
 
-client.whatsapp.send_whatsapp_templated_message(originator="91906152XXXX", recipient="91906152XXXX", message_type="TEMPLATE", template_id="monthly_promotion", body_parameter_values={"0": "promotion"})
+client.whatsapp.send_whatsapp_templated_message(originator="91906152XXXX", recipient="91906152XXXX", template_id="monthly_promotion", body_parameter_values={"0": "promotion"})
 ```
 
 ### Check Whatsapp Request Status
