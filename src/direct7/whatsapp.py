@@ -10,18 +10,24 @@ class WHATSAPP:
         self._client = client
 
     def send_whatsapp_freeform_message(self, originator: str, recipient: str, message_type: str, first_name: str = None,
-                                       last_name: str = None, formatted_name: str = None, birthday: str = None,
+                                       last_name: str = None, formatted_name: str = None, middle_name: str = None,
+                                       suffix: str = None, prefix: str = None, birthday: str = None,
                                        phones: list = None,
                                        emails: list = None, urls: list = None, latitude: str = None,
                                        longitude: str = None,
                                        name: str = None, address: str = None,
                                        type: str = None, url: str = None, caption: str = None, body: str = None,
-                                       message_id: uuid.UUID = None, emoji: str = None):
+                                       message_id: uuid.UUID = None, emoji: str = None,
+                                       contact_addresses: list = None, ):
         """
         Send a WhatsApp message to a single/multiple recipients.
+        :param prefix: Prefix for the contact's name, such as Mr., Ms., Dr., etc.
+        :param suffix: Suffix for the contact's name, if applicable.
+        :param middle_name: Contact's middle name.
+        :param contact_addresses:
         :param emoji:
         :param message_id:
-        :param birthday:
+        :param birthday: Contact's birthday in YYYY-MM-DD format.
         :param originator: str - The message originator.
         :param recipient: str - The message recipient.
         :param message_type: str - The type of message ("CONTACTS", "LOCATION", "ATTACHMENT", "TEXT").
@@ -54,11 +60,15 @@ class WHATSAPP:
                     "first_name": first_name,
                     "last_name": last_name,
                     "formatted_name": formatted_name,
+                    "middle_name": middle_name,
+                    "suffix": suffix,
+                    "prefix": prefix,
                 },
+                "addresses": contact_addresses,
                 "birthday": birthday,
-                "phones": [{"phone": phone} for phone in phones] if phones else None,
-                "emails": [{"email": email} for email in emails] if emails else None,
-                "urls": [{"url": url} for url in urls if urls] if urls else None
+                "phones": phones,
+                "emails": emails,
+                "urls": urls
             }]
         elif message_type == "LOCATION":
             message["content"]["location"] = {

@@ -7,18 +7,76 @@ client = Client(
 def test_send_messages():
     # Contacts
 
-    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="9181XXXXXXXX",
-                                                                            recipient="9190XXXXXXXX",
-                                                                            message_type="CONTACTS", first_name="Amal",
-                                                                            last_name="Anu", formatted_name="Amal Anu",
-                                                                            phones=["9181XXXXXXXX", "9181XXXXXXXX"],
-                                                                            emails=["amal@gmail.com",
-                                                                                    "amal@gmail1.com"])
+    contact_addresses = [
+        {
+            "street": "1 Lucky Shrub Way",
+            "city": "Menlo Park",
+            "state": "CA",
+            "zip": "94025",
+            "country": "United States",
+            "country_code": "US",
+            "type": "WORK"
+        },
+        {
+            "street": "1 Hacker Way",
+            "city": "Menlo Park",
+            "state": "CA",
+            "zip": "94025",
+            "country": "United States",
+            "country_code": "US",
+            "type": "WORK"
+        }
+    ]
+
+    phones = [
+        {
+            "phone": "+16505559999",
+            "type": "HOME"
+        },
+        {
+            "phone": "+19175559999",
+            "type": "WORK",
+            "wa_id": "19175559999"
+        }
+    ]
+
+    emails = [
+        {
+            "email": "bjohnson@luckyshrub.com",
+            "type": "WORK"
+        },
+        {
+            "email": "bjohnson@luckyshrubplants.com",
+            "type": "HOME"
+        }
+    ]
+    urls = [
+        {
+            "url": "https://www.luckyshrub.com",
+            "type": "WORK"
+        },
+        {
+            "url": "https://www.facebook.com/luckyshrubplants",
+            "type": "WORK"
+        }
+    ]
+
+    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="971563287051",
+                                                                            recipient="918086757074",
+                                                                            message_type="CONTACTS",
+                                                                            first_name="Barbara",
+                                                                            last_name="Johnson",
+                                                                            formatted_name="Barbara J. Johnson",
+                                                                            middle_name="Joana", suffix="Esq.",
+                                                                            prefix="Dr.",
+                                                                            phones=phones, emails=emails,
+                                                                            contact_addresses=contact_addresses,
+                                                                            urls=urls)
 
     # Text
 
-    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="XXXXXXXXXX",
-                                                                            recipient="XXXXXXXXXXXXX",
+    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="971563287051",
+                                                                            recipient="918086757074",
                                                                             message_type="TEXT", body="Hi")
 
     # attachment
@@ -129,7 +187,7 @@ def test_send_messages():
                                                                             recipient="918086757074",
                                                                             message_type="REACTION",
                                                                             message_id="f1a99798-11aa-11ef-9821-0242ac1b0030",
-                                                                            emoji=emoji)
+                                                                            emoji="\U0001F600")
 
     # interactive cta_url: text
 
