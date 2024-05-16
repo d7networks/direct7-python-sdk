@@ -61,8 +61,8 @@ def test_send_messages():
         }
     ]
 
-    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="971563287051",
-                                                                            recipient="918086757074",
+    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="XXXXXXXXXXXX",
+                                                                            recipient="XXXXXXXXXXXX",
                                                                             message_type="CONTACTS",
                                                                             first_name="Barbara",
                                                                             last_name="Johnson",
@@ -75,8 +75,8 @@ def test_send_messages():
 
     # Text
 
-    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="971563287051",
-                                                                            recipient="918086757074",
+    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="XXXXXXXXXXXX",
+                                                                            recipient="XXXXXXXXXXXX",
                                                                             message_type="TEXT", body="Hi")
 
     # attachment
@@ -87,13 +87,13 @@ def test_send_messages():
                                                                             caption="Tet")
 
     # attachment: Sticker
-    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="+971563287051",
-                                                                            recipient="918086757074",
+    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="+XXXXXXXXXXXX",
+                                                                            recipient="XXXXXXXXXXXX",
                                                                             message_type="ATTACHMENT", type="sticker",
                                                                             url="https://raw.githubusercontent.com/sagarbhavsar4328/dummys3bucket/master/sample3.webp")
     # location
-    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="+971563287051",
-                                                                           recipient="918086757074",
+    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="+XXXXXXXXXXXX",
+                                                                           recipient="XXXXXXXXXXXX",
                                                                             message_type="LOCATION", latitude="12.93803129081362",
                                                                             longitude="77.61088653615994",
                                                                             name="Mobile Pvt Ltd", address="30, Hosur Rd, 7th Block, Koramangala, Bengaluru, Karnataka 560095")
@@ -183,8 +183,8 @@ def test_send_messages():
 
     # Reaction
     emoji = "\U0001F600"
-    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="+971563287051",
-                                                                            recipient="918086757074",
+    response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="+XXXXXXXXXXXX",
+                                                                            recipient="XXXXXXXXXXXX",
                                                                             message_type="REACTION",
                                                                             message_id="f1a99798-11aa-11ef-9821-0242ac1b0030",
                                                                             emoji="\U0001F600")
@@ -195,8 +195,8 @@ def test_send_messages():
               "display_text": "Visit Alpha",
               "url": "https://www.luckyshrub.com?clickID=kqDGWd24Q5TRwoEQTICY7W1JKoXvaZOXWAS7h1P76s0R7Paec4"
             }
-    response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+971563287051",
-                                                                               recipient="918086757074",
+    response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+XXXXXXXXXXXX",
+                                                                               recipient="XXXXXXXXXXXX",
                                                                                interactive_type="cta_url",
                                                                                header_type="text",
                                                                                header_text="Payment$ for D7 Whatsapp Service",
@@ -209,8 +209,8 @@ def test_send_messages():
         "display_text": "Visit Alpha",
         "url": "https://www.luckyshrub.com?clickID=kqDGWd24Q5TRwoEQTICY7W1JKoXvaZOXWAS7h1P76s0R7Paec4"
     }
-    response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+971563287051",
-                                                                               recipient="918086757074",
+    response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+XXXXXXXXXXXX",
+                                                                               recipient="XXXXXXXXXXXX",
                                                                                interactive_type="cta_url",
                                                                                header_type="image",
                                                                                header_link="https://karix.s3.ap-south-1.amazonaws.com/English-4.jpg",
@@ -243,8 +243,8 @@ def test_send_messages():
                 }
               }
             ]
-    response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+971563287051",
-                                                                               recipient="918086757074",
+    response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+XXXXXXXXXXXX",
+                                                                               recipient="XXXXXXXXXXXX",
                                                                                interactive_type="button",
                                                                                header_type="image",
                                                                                header_link="https://karix.s3.ap-south-1.amazonaws.com/English-4.jpg",
@@ -281,8 +281,8 @@ def test_send_messages():
             ]
         }
     ]
-    response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+971563287051",
-                                                                               recipient="918086757074",
+    response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+XXXXXXXXXXXX",
+                                                                               recipient="XXXXXXXXXXXX",
                                                                                interactive_type="list",
                                                                                header_type="text",
                                                                                header_text="Payment$ for D7 Whatsapp Service",
