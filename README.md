@@ -58,7 +58,7 @@ from direct7 import Client
 client = Client(api_token="Your API token")
 
 client.sms.send_messages(
-        {"recipients": ["+9199XXXXXXXXXX"],"content": "مرحبا بالعالم!", "unicode": True},
+        {"recipients": ["+9199XXXXXXXX"],"content": "مرحبا بالعالم!", "unicode": True},
         originator="Sender",
         report_url="https://the_url_to_receive_delivery_report.com",
         )
@@ -121,19 +121,18 @@ client.verify.get_status(otp_id="0012c7f5-2ba5-49db-8901-4ee9be6dc8d1")
 
 ### Whatsapp
 
-### Send Whatsapp Free-form Message (Contact Details)
+### Send Whatsapp Free-form Message (Location Details)
 
 ```python
 from direct7 import Client
 
 client = Client(api_token="Your API token")
 
-client.whatsapp.send_whatsapp_freeform_message( originator="9181XXXXXXXX",
-                                                recipient="9190XXXXXXXX",
-                                                message_type="CONTACTS", first_name="Amal",
-                                                last_name="Anu", formatted_name="Amal Anu",
-                                                phones=["9181XXXXXXXX", "9181XXXXXXXX"],
-                                                emails=["amal@gmail.com", "amal2@gmail1.com"])
+client.whatsapp.send_whatsapp_freeform_message(originator="91906152XXXX",
+                                               recipient="91906112XXXX",
+                                                message_type="LOCATION", latitude="12.93803129081362",
+                                                longitude="77.61088653615994",
+                                                name="Mobile Pvt Ltd", address="30, Hosur Rd, 7th Block, Koramangala, Bengaluru, Karnataka 560095")
 ```
 
 ### Send Whatsapp Templated Message.
@@ -143,7 +142,7 @@ from direct7 import Client
 
 client = Client(api_token="Your API token")
 
-client.whatsapp.send_whatsapp_templated_message(originator="91906152XXXX", recipient="91906152XXXX", template_id="monthly_promotion", body_parameter_values={"0": "promotion"})
+client.whatsapp.send_whatsapp_templated_message(originator="91906152XXXX", recipient="91906112XXXX", template_id="monthly_promotion", body_parameter_values={"0": "promotion"})
 ```
 
 ### Check Whatsapp Request Status
