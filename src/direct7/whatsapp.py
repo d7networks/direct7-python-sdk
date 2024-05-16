@@ -1,4 +1,5 @@
 import logging
+import uuid
 
 log = logging.getLogger(__name__)
 
@@ -9,14 +10,24 @@ class WHATSAPP:
         self._client = client
 
     def send_whatsapp_freeform_message(self, originator: str, recipient: str, message_type: str, first_name: str = None,
-                                       last_name: str = None, formatted_name: str = None, birthday: str = None,
+                                       last_name: str = None, formatted_name: str = None, middle_name: str = None,
+                                       suffix: str = None, prefix: str = None, birthday: str = None,
                                        phones: list = None,
                                        emails: list = None, urls: list = None, latitude: str = None,
                                        longitude: str = None,
                                        name: str = None, address: str = None,
-                                       type: str = None, url: str = None, caption: str = None, body: str = None):
+                                       type: str = None, url: str = None, caption: str = None, body: str = None,
+                                       message_id: uuid.UUID = None, emoji: str = None,
+                                       contact_addresses: list = None, ):
         """
         Send a WhatsApp message to a single/multiple recipients.
+        :param prefix: Prefix for the contact's name, such as Mr., Ms., Dr., etc.
+        :param suffix: Suffix for the contact's name, if applicable.
+        :param middle_name: Contact's middle name.
+        :param contact_addresses:
+        :param emoji:
+        :param message_id:
+        :param birthday: Contact's birthday in YYYY-MM-DD format.
         :param originator: str - The message originator.
         :param recipient: str - The message recipient.
         :param message_type: str - The type of message ("CONTACTS", "LOCATION", "ATTACHMENT", "TEXT").
@@ -49,11 +60,15 @@ class WHATSAPP:
                     "first_name": first_name,
                     "last_name": last_name,
                     "formatted_name": formatted_name,
+                    "middle_name": middle_name,
+                    "suffix": suffix,
+                    "prefix": prefix,
                 },
+                "addresses": contact_addresses,
                 "birthday": birthday,
-                "phones": [{"phone": phone} for phone in phones] if phones else None,
-                "emails": [{"email": email} for email in emails] if emails else None,
-                "urls": [{"url": url} for url in urls if urls] if urls else None
+                "phones": phones,
+                "emails": emails,
+                "urls": urls
             }]
         elif message_type == "LOCATION":
             message["content"]["location"] = {
@@ -73,6 +88,12 @@ class WHATSAPP:
                 "body": body
             }
 
+        elif message_type == "REACTION":
+            message["content"]["reaction"] = {
+                "message_id": message_id,
+                "emoji": emoji
+            }
+
         response = self._client.post(
             self._client.host(), "/whatsapp/v2/send", params={"messages": [message]})
         log.info("Message sent successfully.")
@@ -83,7 +104,8 @@ class WHATSAPP:
                                         media_url: str = None,
                                         latitude: str = None, longitude: str = None, location_name: str = None,
                                         location_address: str = None, lto_expiration_time_ms: str = None,
-                                        coupon_code: str = None, quick_replies: dict = None, actions: dict = None, carousel_cards: list = []):
+                                        coupon_code: str = None, quick_replies: dict = None, actions: dict = None,
+                                        carousel_cards: list = []):
         """
         Send a WhatsApp message to a single/multiple recipients.
         :param originator: str - The message originator.
@@ -143,6 +165,65 @@ class WHATSAPP:
         if carousel_cards:
             message["content"]["template"]["carousel"] = {
                 "cards": carousel_cards
+            }
+
+        response = self._client.post(
+            self._client.host(), "/whatsapp/v2/send", params={"messages": [message]})
+        log.info("Message sent successfully.")
+        return response
+
+    def send_whatsapp_interactive_message(self, originator: str, recipient: str, interactive_type: str,
+                                          header_type: str = None, header_text: str = None,
+                                          header_link: str = None, header_file_name: str = None, body_text: str = None,
+                                          footer_text: str = None, parameters: dict = None, sections: list = None,
+                                          buttons: list = None, list_button_text: str = None, ):
+        """
+        Send a WhatsApp interactive message to a single/multiple recipients.
+        :param originator: str - The message originator.
+        :param recipient: str - The message recipient.
+        :param interactive_type:
+
+        """
+        message = {
+            "originator": originator,
+            "recipients": [{"recipient": recipient}],
+            "content": {
+                "message_type": "INTERACTIVE",
+                "interactive": {
+                    "type": interactive_type,
+                    "header": {
+                        "type": header_type,
+                    },
+                    "body": {
+                        "text": body_text,
+                    },
+                    "footer": {
+                        "text": footer_text,
+                    }
+                }
+            }
+        }
+        if header_type == "text":
+            message["content"]["interactive"]["header"]["text"] = header_text
+
+        elif header_type == "image" or header_type == "video" or header_type == "document":
+            message["content"]["interactive"]["header"][header_type] = {
+                "filename": header_file_name if header_type == "document" else None,
+                "link": header_link
+            }
+
+        if interactive_type == "cta_url":
+            message["content"]["interactive"]["action"] = {
+                "parameters": parameters,
+            }
+        elif interactive_type == "button":
+            message["content"]["interactive"]["action"] = {
+                "buttons": buttons,
+            }
+        elif interactive_type == "list":
+            message["content"]["interactive"]["action"] = {
+                "sections": sections,
+                "button": list_button_text
             }
 
         response = self._client.post(
