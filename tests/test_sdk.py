@@ -93,16 +93,36 @@ def test_send_messages():
                                                                             url="https://raw.githubusercontent.com/sagarbhavsar4328/dummys3bucket/master/sample3.webp")
     # location
     response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="+XXXXXXXXXXXX",
-                                                                           recipient="XXXXXXXXXXXX",
-                                                                            message_type="LOCATION", latitude="12.93803129081362",
+                                                                            recipient="XXXXXXXXXXXX",
+                                                                            message_type="LOCATION",
+                                                                            latitude="12.93803129081362",
                                                                             longitude="77.61088653615994",
-                                                                            name="Mobile Pvt Ltd", address="30, Hosur Rd, 7th Block, Koramangala, Bengaluru, Karnataka 560095")
+                                                                            name="Mobile Pvt Ltd",
+                                                                            address="30, Hosur Rd, 7th Block, Koramangala, Bengaluru, Karnataka 560095")
+
+    # templated: location
+    response_send_messages = client.whatsapp.send_whatsapp_templated_message(originator="+971563287051",
+                                                                             recipient="+918086757074",
+                                                                             template_id="location", language="en",
+                                                                             media_type="location",
+                                                                             latitude="12.93803129081362",
+                                                                             longitude="77.61088653615994",
+                                                                             name="Mobile Pvt Ltd",
+                                                                             address="30, Hosur Rd, 7th Block, Koramangala, Bengaluru, Karnataka 560095")
+
+    # templated: text
+    response_send_messages = client.whatsapp.send_whatsapp_templated_message(originator="+971563287051",
+                                                                             recipient="+918086757074",
+                                                                             template_id="header_param", language="en",
+                                                                             media_type="text",
+                                                                             text_header_title="Ds")
 
     # lto
     response_send_messages = client.whatsapp.send_whatsapp_templated_message(originator="+XXXXXXXXXXX",
                                                                              recipient="XXXXXXXXXXXXX",
                                                                              template_id="limited_time_offer",
-                                                                             media_type="image", media_url="https://upload.wikimedia.org",
+                                                                             media_type="image",
+                                                                             media_url="https://upload.wikimedia.org",
                                                                              lto_expiration_time_ms="1708804800000",
                                                                              coupon_code="DWS44")
     # Action
@@ -192,16 +212,17 @@ def test_send_messages():
     # interactive cta_url: text
 
     parameters = {
-              "display_text": "Visit Alpha",
-              "url": "https://www.luckyshrub.com?clickID=kqDGWd24Q5TRwoEQTICY7W1JKoXvaZOXWAS7h1P76s0R7Paec4"
-            }
+        "display_text": "Visit Alpha",
+        "url": "https://www.luckyshrub.com?clickID=kqDGWd24Q5TRwoEQTICY7W1JKoXvaZOXWAS7h1P76s0R7Paec4"
+    }
     response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+XXXXXXXXXXXX",
                                                                                recipient="XXXXXXXXXXXX",
                                                                                interactive_type="cta_url",
                                                                                header_type="text",
                                                                                header_text="Payment$ for D7 Whatsapp Service",
                                                                                body_text="Direct7 Networks is a messaging service provider that specializes in helping organizations efficiently communicate with their customers.",
-                                                                               footer_text="Thank You", parameters=parameters)
+                                                                               footer_text="Thank You",
+                                                                               parameters=parameters)
 
     ## interactive cta_url: image
 
@@ -221,28 +242,28 @@ def test_send_messages():
     # interactive button: image
 
     buttons = [
-              {
-                "type": "reply",
-                "reply": {
-                  "id": "1",
-                  "title": "Debit Card"
-                }
-              },
-              {
-                "type": "reply",
-                "reply": {
-                  "id": "2",
-                  "title": "Credit Card"
-                }
-              },
-              {
-                "type": "reply",
-                "reply": {
-                  "id": "3",
-                  "title": "Cash"
-                }
-              }
-            ]
+        {
+            "type": "reply",
+            "reply": {
+                "id": "1",
+                "title": "Debit Card"
+            }
+        },
+        {
+            "type": "reply",
+            "reply": {
+                "id": "2",
+                "title": "Credit Card"
+            }
+        },
+        {
+            "type": "reply",
+            "reply": {
+                "id": "3",
+                "title": "Cash"
+            }
+        }
+    ]
     response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+XXXXXXXXXXXX",
                                                                                recipient="XXXXXXXXXXXX",
                                                                                interactive_type="button",
@@ -305,3 +326,4 @@ def test_get_status():
 
 if __name__ == "__main__":
     test_send_messages()
+    test_get_status()

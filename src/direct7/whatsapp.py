@@ -12,15 +12,14 @@ class WHATSAPP:
     def send_whatsapp_freeform_message(self, originator: str, recipient: str, message_type: str, first_name: str = None,
                                        last_name: str = None, formatted_name: str = None, middle_name: str = None,
                                        suffix: str = None, prefix: str = None, birthday: str = None,
-                                       phones: list = None,
-                                       emails: list = None, urls: list = None, latitude: str = None,
-                                       longitude: str = None,
-                                       name: str = None, address: str = None,
-                                       type: str = None, url: str = None, caption: str = None, body: str = None,
-                                       message_id: uuid.UUID = None, emoji: str = None,
-                                       contact_addresses: list = None, ):
+                                       phones: list = None, emails: list = None, urls: list = None,
+                                       latitude: str = None, longitude: str = None, name: str = None,
+                                       address: str = None, type: str = None, url: str = None, caption: str = None,
+                                       filename: str = None, body: str = None, message_id: uuid.UUID = None,
+                                       emoji: str = None, contact_addresses: list = None, ):
         """
         Send a WhatsApp message to a single/multiple recipients.
+        :param filename:
         :param prefix: Prefix for the contact's name, such as Mr., Ms., Dr., etc.
         :param suffix: Suffix for the contact's name, if applicable.
         :param middle_name: Contact's middle name.
@@ -78,11 +77,19 @@ class WHATSAPP:
                 "address": address
             }
         elif message_type == "ATTACHMENT":
-            message["content"]["attachment"] = {
-                "type": type,
-                "url": url,
-                "caption": caption
-            }
+            if type == "document":
+                message["content"]["attachment"] = {
+                    "type": type,
+                    "url": url,
+                    "caption": caption,
+                    "filename": filename
+                }
+            else:
+                message["content"]["attachment"] = {
+                    "type": type,
+                    "url": url,
+                    "caption": caption
+                }
         elif message_type == "TEXT":
             message["content"]["text"] = {
                 "body": body
@@ -99,11 +106,11 @@ class WHATSAPP:
         log.info("Message sent successfully.")
         return response
 
-    def send_whatsapp_templated_message(self, originator: str, recipient: str, template_id: str,
+    def send_whatsapp_templated_message(self, originator: str, recipient: str, template_id: str, language: str,
                                         body_parameter_values: dict = {}, media_type: str = None,
-                                        media_url: str = None,
-                                        latitude: str = None, longitude: str = None, location_name: str = None,
-                                        location_address: str = None, lto_expiration_time_ms: str = None,
+                                        text_header_title: str = None, media_url: str = None,
+                                        latitude: str = None, longitude: str = None, name: str = None,
+                                        address: str = None, lto_expiration_time_ms: str = None,
                                         coupon_code: str = None, quick_replies: dict = None, actions: dict = None,
                                         carousel_cards: list = []):
         """
@@ -120,7 +127,8 @@ class WHATSAPP:
             "recipients": [{"recipient": recipient}],
             "content": {
                 "message_type": "TEMPLATE",
-                "template": {"template_id": template_id, "body_parameter_values": body_parameter_values}
+                "template": {"template_id": template_id, "language": language,
+                             "body_parameter_values": body_parameter_values}
             }
         }
 
@@ -131,10 +139,13 @@ class WHATSAPP:
                     "location": {
                         "latitude": latitude,
                         "longitude": longitude,
-                        "name": location_name,
-                        "address": location_address
+                        "name": name,
+                        "address": address
                     }
                 }
+            elif media_type == "text":
+                message["content"]["template"]["media"] = {
+                    "media_type": media_type, "text_header_title": text_header_title}
             else:
                 message["content"]["template"]["media"] = {
                     "media_type": media_type, "media_url": media_url}
