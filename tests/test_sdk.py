@@ -83,7 +83,7 @@ def test_send_messages():
     response_send_messages = client.whatsapp.send_whatsapp_freeform_message(originator="XXXXXXXXXXXXX",
                                                                             recipient="XXXXXXXXXXXXX",
                                                                             message_type="ATTACHMENT", type="image",
-                                                                            url="https://upload.wikimedia.org",
+                                                                            url="https://t4.ftcdn.net/jpg/01/43/23/83/360_F_143238306_lh0ap42wgot36y44WybfQpvsJB5A1CHc.jpg",
                                                                             caption="Tet")
 
     # attachment: Sticker
@@ -101,8 +101,8 @@ def test_send_messages():
                                                                             address="30, Hosur Rd, 7th Block, Koramangala, Bengaluru, Karnataka 560095")
 
     # templated: location
-    response_send_messages = client.whatsapp.send_whatsapp_templated_message(originator="+971563287051",
-                                                                             recipient="+918086757074",
+    response_send_messages = client.whatsapp.send_whatsapp_templated_message(originator="+XXXXXXXXXXXX",
+                                                                             recipient="+XXXXXXXXXXXX",
                                                                              template_id="location", language="en",
                                                                              media_type="location",
                                                                              latitude="12.93803129081362",
@@ -111,8 +111,8 @@ def test_send_messages():
                                                                              address="30, Hosur Rd, 7th Block, Koramangala, Bengaluru, Karnataka 560095")
 
     # templated: text
-    response_send_messages = client.whatsapp.send_whatsapp_templated_message(originator="+971563287051",
-                                                                             recipient="+918086757074",
+    response_send_messages = client.whatsapp.send_whatsapp_templated_message(originator="+XXXXXXXXXXXX",
+                                                                             recipient="+XXXXXXXXXXXX",
                                                                              template_id="header_param", language="en",
                                                                              media_type="text",
                                                                              text_header_title="Ds")

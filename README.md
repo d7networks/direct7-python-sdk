@@ -142,7 +142,7 @@ from direct7 import Client
 
 client = Client(api_token="Your API token")
 
-client.whatsapp.send_whatsapp_templated_message(originator="91906152XXXX", recipient="91906112XXXX", template_id="monthly_promotion", body_parameter_values={"0": "promotion"})
+client.whatsapp.send_whatsapp_templated_message(originator="91906152XXXX", recipient="91906112XXXX", template_id="monthly_promotion", language= "en", body_parameter_values={"0": "promotion"})
 ```
 
 ### Check Whatsapp Request Status
