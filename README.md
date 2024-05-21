@@ -145,6 +145,28 @@ client = Client(api_token="Your API token")
 client.whatsapp.send_whatsapp_templated_message(originator="91906152XXXX", recipient="91906112XXXX", template_id="monthly_promotion", language= "en", body_parameter_values={"0": "promotion"})
 ```
 
+### Send Whatsapp Interactive Message.
+
+```python
+from direct7 import Client
+
+client = Client(api_token="Your API token")
+
+parameters = {
+    "display_text": "Visit Alpha",
+    "url": "https://www.luckyshrub.com?clickID=kqDGWd24Q5TRwoEQTICY7W1JKoXvaZOXWAS7h1P76s0R7Paec4"
+}
+    
+response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+91906152XXXX",
+                                                                           recipient="91906112XXXX",
+                                                                           interactive_type="cta_url",
+                                                                           header_type="text",
+                                                                           header_text="Payment$ for D7 Whatsapp Service",
+                                                                           body_text="Direct7 Networks is a messaging service provider that specializes in helping organizations efficiently communicate with their customers.",
+                                                                           footer_text="Thank You",
+                                                                           parameters=parameters)
+```
+
 ### Check Whatsapp Request Status
 
 ```python
