@@ -236,6 +236,16 @@ class WHATSAPP:
                 "sections": sections,
                 "button": list_button_text
             }
+        elif interactive_type == "location_request_message":
+            message["content"]["interactive"]["action"] = {
+                "name": "send_location"
+            }
+        
+        elif interactive_type == "address_message":
+            message["content"]["interactive"]["action"] = {
+                "parameters": parameters
+            }
+        
 
         response = self._client.post(
             self._client.host(), "/whatsapp/v2/send", params={"messages": [message]})

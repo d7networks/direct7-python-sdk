@@ -239,6 +239,73 @@ def test_send_messages():
                                                                                footer_text="Thank You",
                                                                                parameters=parameters)
 
+    # interactive Location Request Message
+
+    response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+XXXXXXXXXXXX",
+                                                                               recipient="XXXXXXXXXXXX",
+                                                                               interactive_type="location_request_message",
+                                                                               body_text="Let's Start with your pickup")
+    # interactive Address Message
+    parameters_address = {
+            "country": "IN",
+            "values": {
+               "name": "Steni Mariya",
+               "phone_number": "+971549758543",
+               "in_pin_code": 687826,
+               "house_number": "45",
+               "floor_number": "3",
+              "tower_number": 34,
+              "building_name": "Excel",
+              "address": "House nammmme",
+              "landmark_area": "Near Mobile Tower",
+              "city": "Thrissur",
+              "state": "Kerala"
+            },
+          "saved_addresses": [
+              {
+              "id": "address1",
+               "value": {
+               "name": "Lifiya Mariya",
+               "phone_number": "+971569698543",
+               "in_pin_code": 6843426,
+               "house_number": "45",
+               "floor_number": "3",
+              "tower_number": 34,
+              "building_name": "Excel",
+              "address": "House nammmme",
+              "landmark_area": "Near Mobile Tower",
+              "city": "Thrissur",
+              "state": "Kerala"
+            }
+              },
+              {
+              "id": "address1",
+               "value": {
+               "name": "Mariya",
+               "phone_number": "+971589652543",
+               "in_pin_code": 680012,
+               "house_number": "45",
+               "floor_number": "3",
+              "tower_number": 34,
+              "building_name": "Excel",
+              "address": "House nammmme",
+              "landmark_area": "Near Mobile Tower",
+              "city": "Thrissur",
+              "state": "Kerala"
+            }
+              }
+          ]
+         }
+
+    response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+XXXXXXXXXXXX",
+                                                                               recipient="XXXXXXXXXXXX",
+                                                                               interactive_type="address_message",
+                                                                                header_type="image",
+                                                                               header_link="https://karix.s3.ap-south-1.amazonaws.com/English-4.jpg",
+                                                                               body_text="Direct7 Networks is a messaging service provider that specializes in helping organizations efficiently communicate with their customers.",
+                                                                               footer_text="Thank You",
+                                                                               parameters=parameters_address)
+
     # interactive button: image
 
     buttons = [
