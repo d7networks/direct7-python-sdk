@@ -265,3 +265,17 @@ class WHATSAPP:
         )
         log.info("Message status retrieved successfully.")
         return response
+
+    def read_receipt(self, message_id: str):
+        """
+        Mark an incoming messsage as read
+        :param params:
+        request_id : str - The message ID of the whatsapp message.
+        :return:
+        """
+        response = self._client.post(
+            self._client.host(),
+            f"/whatsapp/v2/read-receipt/{message_id}"
+        )
+        log.info("Successfully marked incoming message as read.")
+        return response

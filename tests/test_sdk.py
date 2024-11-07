@@ -385,12 +385,19 @@ def test_send_messages():
 
 
 def test_get_status():
-    response_get_status = client.sms.get_status(request_id="00152e17-1717-4568-b793-bd6c729c1ff3")
+    response_get_status = client.whatsapp.get_status(request_id="00152e17-1717-4568-b793-bd6c729c1ff3")
     print(response_get_status)
     assert response_get_status is not None
     assert response_get_status
 
 
+def test_read_receipt():
+    response_read_receipt = client.whatsapp.read_receipt(message_id="d4056f64-9cdd-11ef-84b3-0242ac1b0027")
+    print(response_read_receipt)
+    assert response_read_receipt is not None
+    assert response_read_receipt
+
 if __name__ == "__main__":
     test_send_messages()
     test_get_status()
+    test_read_receipt()
