@@ -397,7 +397,16 @@ def test_read_receipt():
     assert response_read_receipt is not None
     assert response_read_receipt
 
+
+def test_download_media():
+    response_download_media = client.whatsapp.download_media(media_id="1645986862789581")
+    print(response_download_media)
+    assert response_download_media is not None
+    assert response_download_media
+
+
 if __name__ == "__main__":
     test_send_messages()
     test_get_status()
     test_read_receipt()
+    test_download_media()

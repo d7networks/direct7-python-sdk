@@ -279,3 +279,17 @@ class WHATSAPP:
         )
         log.info("Successfully marked incoming message as read.")
         return response
+
+    def download_media(self, media_id: str):
+         """
+         Download user Initiated Media
+         :param params:
+         media_id : str - The media ID of the whatsapp user initiated message.
+         :return:
+         """
+         response = self._client.get(
+             self._client.host(),
+             f"/whatsapp/v2/download/{media_id}"
+         )
+         log.info("Successfully downloaded media.")
+         return response
