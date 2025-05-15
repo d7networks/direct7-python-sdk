@@ -16,7 +16,7 @@ class SMS:
                         - recipients: list - Mobile Numbers to send SMS separated by comma in an array.
                         - content: str - The message content being sent.
                         - msg_type: str - Type of the message (e.g., "text").
-                        - data_coding: str - Coding type for the message (e.g., "text" or "unicode").
+                        - unicode: boolean - true content is not gsm03.38 safe
         :param originator: str - The Sender/Header of a message.
         :param report_url: str - Receive delivery status.
         :param schedule_time: str - schedule_time.
@@ -30,7 +30,7 @@ class SMS:
                 "recipients": message.get("recipients", []),
                 "content": message.get("content", ""),
                 "msg_type": "text",
-                "data_coding": "unicode" if message.get("content", False) else "text"
+                "data_coding": "unicode" if message.get("unicode", False) else "text"
             }
             for message in args
         ]
