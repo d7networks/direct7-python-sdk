@@ -138,6 +138,18 @@ def test_send_messages():
                                                                              recipient="XXXXXXXXXXXXX",
                                                                              template_id="click_me",
                                                                              actions=actions)
+    # Flow
+    button_flow=[{"flow_token":"unused",
+                "action_type":"flow",
+                "index":"0",
+                "flow_action_data":{}
+                }]
+
+    response_send_messages = client.whatsapp.send_whatsapp_templated_message(originator="+XXXXXXXXXXX",
+                                                                             recipient="+XXXXXXXXXXX",
+                                                                             template_id="sample_testing_campaign",
+                                                                             language='en_GB',
+                                                                             button_flow=button_flow)
     # Carousel
     cards = [
         {
@@ -379,6 +391,32 @@ def test_send_messages():
                                                                                list_button_text="Choose Service",
                                                                                sections=sections)
 
+    # Interactive flow
+
+    flowparameter= {
+      "name": "flow",
+      "parameters": {
+        "flow_message_version": "3",
+        "flow_token": "unused",
+        "flow_id": "530404409952136",
+        "flow_cta": "Book Demo",
+        "flow_action": "navigate",
+        "flow_action_payload": {
+          "screen": "screen_"
+        }
+      }
+      }
+
+    response_send_messages = client.whatsapp.send_whatsapp_interactive_message(originator="+XXXXXXXXXXX",
+                                                                               recipient="+XXXXXXXXXXX",
+                                                                               interactive_type="flow",
+                                                                               header_type="text",
+                                                                               header_text="Payment$ for D7 Whatsapp Service",
+                                                                               body_text="Direct7 Networks is a messaging service provider that specializes in helping organizations efficiently communicate with their customers.",
+                                                                               footer_text="Thank You",
+                                                                               parameters=flowparameter
+                                                                               )
+
     print(response_send_messages)
     assert response_send_messages is not None
     assert response_send_messages
@@ -404,9 +442,22 @@ def test_download_media():
     assert response_download_media is not None
     assert response_download_media
 
+def test_send_flow_template_message():
+    button_flow=[{"flow_token":"unused",
+                "action_type":"flow",
+                "index":"0",
+                "flow_action_data":{}
+                }
+            ]
+    response_data = client.whatsapp.send_whatsapp_templated_message(originator="+XXXXXXXXXXX",
+                                                                             recipient="+XXXXXXXXXXX",
+                                                                             template_id="benq_owew",
+                                                                             language='en_GB',
+                                                                             button_flow=button_flow)
 
 if __name__ == "__main__":
     test_send_messages()
+    test_send_flow_template_message()
     test_get_status()
     test_read_receipt()
     test_download_media()

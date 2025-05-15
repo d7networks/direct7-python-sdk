@@ -112,6 +112,7 @@ class WHATSAPP:
                                         latitude: str = None, longitude: str = None, name: str = None,
                                         address: str = None, lto_expiration_time_ms: str = None,
                                         coupon_code: str = None, quick_replies: dict = None, actions: dict = None,
+                                        button_flow:dict = None,
                                         carousel_cards: list = []):
         """
         Send a WhatsApp message to a single/multiple recipients.
@@ -152,6 +153,10 @@ class WHATSAPP:
         if lto_expiration_time_ms:
             message["content"]["template"]["limited_time_offer"] = {
                 "expiration_time_ms": lto_expiration_time_ms
+            }
+        if button_flow:
+            message["content"]["template"]["buttons"] = {
+                'button_flow': button_flow
             }
         if coupon_code:
             message["content"]["template"]["buttons"] = {
@@ -245,6 +250,8 @@ class WHATSAPP:
             message["content"]["interactive"]["action"] = {
                 "parameters": parameters
             }
+        elif interactive_type == "flow":
+            message["content"]["interactive"]["action"] = parameters
         
 
         response = self._client.post(
