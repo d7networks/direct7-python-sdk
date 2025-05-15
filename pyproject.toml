@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "direct7"
-version = "0.0.14"
+version = "0.0.15"
 authors = [
   { name="Direct7 Networks", email="support@d7networks.com" },
 ]
