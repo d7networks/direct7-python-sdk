@@ -178,6 +178,28 @@ client = Client(api_token="Your API token")
 client.whatsapp.get_status(request_id="0012c7f5-2ba5-49db-8901-4ee9be6dc8d1")
 ```
 
+### Whatsapp Read Receipt
+
+```python
+from direct7 import Client
+
+client = Client(api_token="Your API token")
+
+# request_id is the id returned in the response of send_message
+client.whatsapp.read_receipt(message_id="0012c7f5-2ba5-49db-8901-4ee9be6dc8d1")
+```
+
+### Whatsapp User Initiated Media Download
+
+```python
+from direct7 import Client
+
+client = Client(api_token="Your API token")
+
+# request_id is the id returned in the response of send_message
+client.whatsapp.download_media(media_id="16554534343")
+```
+
 ### Number Lookup
 
 ### Search Phone Number Details
