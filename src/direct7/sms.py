@@ -30,7 +30,7 @@ class SMS:
                 "recipients": message.get("recipients", []),
                 "content": message.get("content", ""),
                 "msg_type": "text",
-                "data_coding": "unicode" if message.get("content", False) else "text"
+                "data_coding": "unicode" if message.get("data_coding") == "unicode" else "text"
             }
             for message in args
         ]
