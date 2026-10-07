@@ -8,6 +8,7 @@ class VERIFY:
 
     def __init__(self, client):
         self._client = client
+        self.v2 = VERIFY_V2(client)
 
     def send_otp(self, originator: str, recipient: str, content: str = None, data_coding: str = None, expiry: int = None, template_id: int = None):
         """
@@ -79,6 +80,72 @@ class VERIFY:
         response = self._client.get(
             self._client.host(),
             f"/verify/v1/report/{otp_id}"
+        )
+        log.info("OTP Message status retrieved successfully.")
+        return response
+
+
+class VERIFY_V2:
+
+    def __init__(self, client):
+        self._client = client
+
+    def send_otp(self, recipient: str, flow_id: str):
+        """
+        Send an otp to a single recipient using a verification flow (Verify V2).
+        :param recipient: str - Mobile Number to send OTP Code, in international format.
+        :param flow_id: str - ID of the verification flow created in the dashboard.
+        :return:
+        """
+        params = {
+            "recipient": recipient,
+            "flow_id": flow_id
+        }
+        response = self._client.post(self._client.host(), "/verify/v2/otp/send-otp", params=params)
+        log.info("OTP Message sent successfully.")
+        return response
+
+    def resend_otp(self, otp_id: UUID):
+        """
+        Re-send an otp to a single recipient (Verify V2).
+        :param otp_id: uuid - the otp_id which was returned from Generate OTP endpoint.
+        :return:
+        """
+        params = {
+            "otp_id": otp_id
+        }
+        response = self._client.post(
+            self._client.host(),
+            "/verify/v2/otp/resend-otp",
+            params=params
+        )
+        log.info("OTP Message Re-sent successfully.")
+        return response
+
+    def verify_otp(self, otp_id: UUID, otp_code: str):
+        """
+        Verify an otp (Verify V2).
+        :param otp_id: uuid - the otp_id which was returned from Generate OTP endpoint.
+        :param otp_code: str - the otp which is received on customers mobile phone.
+        :return:
+        """
+        params = {
+            "otp_id": otp_id,
+            "otp_code": otp_code
+        }
+        response = self._client.post(self._client.host(), "/verify/v2/otp/verify-otp", params=params)
+        log.info("OTP Message verified successfully.")
+        return response
+
+    def get_status(self, otp_id: str):
+        """
+        Get the status for an otp request (Verify V2).
+        :param otp_id: uuid - the otp_id which was returned from Generate OTP endpoint.
+        :return:
+        """
+        response = self._client.get(
+            self._client.host(),
+            f"/verify/v2/report/{otp_id}"
         )
         log.info("OTP Message status retrieved successfully.")
         return response
